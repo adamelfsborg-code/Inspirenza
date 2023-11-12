@@ -1,23 +1,23 @@
-use std::io::{stdin,stdout,Write};
+use std::io::{stdin, stdout, Write};
 
 fn main() {
-    let mut sentence=String::new();
-    loop {
-        print!("Please enter some text: ");
-        stdout().flush().unwrap();
-        match stdin().read_line(&mut sentence) {
-            Err(err) => {
-                println!("{err}")
-            },
-            Ok(_) => {break}
-        }
-    }
-    let word = find_first_word(&mut sentence);
-    println!("The first word is {}", word)
+    let sentence = get_input("Please enter some text: ");
+    let word = find_first_word(&sentence);
+    println!("The first word is '{}'", word);
 }
 
+fn get_input(prompt: &str) -> String {
+    loop {
+        print!("{}", prompt);
+        stdout().flush().unwrap();
+        let mut input = String::new();
+        match stdin().read_line(&mut input) {
+            Err(err) => println!("{err}"),
+            Ok(_) => return input.trim().to_string(),
+        }
+    }
+}
 
-fn find_first_word(sentence: &mut String) -> &str {
-    let mut word = sentence.split(' ');
-    word.next().unwrap()
+fn find_first_word(sentence: &str) -> &str {
+    sentence.split_whitespace().next().unwrap_or("")
 }
