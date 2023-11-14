@@ -1,5 +1,16 @@
+mod user;
+mod prelude {
+    pub use crate::user::{User,Admin};
+}
+
+use crate::prelude::*; 
+
 fn main() {
-    println!("Hello, world!");
+    let _u = User{ name: String::from("Adam Elfsborg") };
+    let _a = Admin{ name: String::from("Adam Elfsborg") };
+
+    println!("{:#?}", _a.name);
+
     foo("Hello");
 }
 
